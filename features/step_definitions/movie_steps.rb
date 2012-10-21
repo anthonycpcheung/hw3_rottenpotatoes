@@ -32,20 +32,20 @@ end
 Then /^I should see all movies with following ratings: (.*)$/ do |rating_list|
   rating_list.split(/,\s*/).each do |rating|
     value = Movie.find_all_by_rating([rating]).count
-    rows = page.all('tbody tr td', :text => /^#{rating}$/).length
+    rows = page.all('tbody tr td', :text => /^#{Regexp.quote(rating)}$/).length
     assert_equal value, rows
   end
 end
 
 Then /^I should not see any movies with following ratings: (.*)$/ do |rating_list|
   rating_list.split(/,\s*/).each do |rating|
-    rows = page.all('tbody tr td', :text => /^#{rating}$/).length
+    rows = page.all('tbody tr td', :text => /^#{Regexp.quote(rating)}$/).length
     assert_equal 0, rows
   end
 end
 
 Then /^I should see all of the movies$/ do 
-  step "I should see all movies with followings ratings: #{Movie.all_ratings.join(",")}"
+  step "I should see all movies with following ratings: #{Movie.all_ratings.join(",")}"
 end
 
 When /^I (un)?check all ratings$/ do |uncheck|
