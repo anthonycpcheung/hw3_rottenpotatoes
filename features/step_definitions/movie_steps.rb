@@ -57,3 +57,8 @@ When /^I (un)?check all ratings$/ do |uncheck|
     end
   end
 end
+
+Then /^the (.*) of "([^"]*)" should be "([^"]*)"$/ do |field, movie_title, expected_value|
+  step %{I should see "#{movie_title}"}
+  assert_match Regexp.new("#{field}.*[\\s\\n]+#{expected_value}",true), page.body, "#{field} is not #{expected_value}"
+end

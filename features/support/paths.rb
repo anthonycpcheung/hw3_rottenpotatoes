@@ -21,6 +21,13 @@ module NavigationHelpers
     #
     #   when /^(.*)'s profile page$/i
     #     user_profile_path(User.find_by_login($1))
+    when /^the (.*) page for "([^"]*)"$/
+    begin
+      movie_title = $2
+      path_command = $1.sub(/\s+/, '_').downcase 
+      movie_id = Movie.find_by_title(movie_title).id
+      path = "/movies/#{movie_id}" + ((path_command == "details") ? "" : "/#{path_command}")
+    end
 
     else
       begin
